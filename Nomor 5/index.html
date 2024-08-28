@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Countdown Timer</title>
+  </head>
+  <body>
+    <h1>Hitung Mundur</h1>
+    <div id="countdown">10</div>
+    <br />
+    <button id="startButton" onclick="startCountdown()">Mulai</button>
+    <button id="stopButton" onclick="stopCountdown()" disabled>Berhenti</button>
+
+    <script>
+      let countdown = 10;
+      let interval;
+
+      function startCountdown() {
+        document.getElementById("startButton").disabled = true;
+        document.getElementById("stopButton").disabled = false;
+        document.getElementById("countdown").classList.remove("expired");
+        document.getElementById("countdown").textContent = countdown;
+
+        interval = setInterval(() => {
+          countdown--;
+          document.getElementById("countdown").textContent = countdown;
+
+          if (countdown <= 0) {
+            clearInterval(interval);
+            document.getElementById("countdown").textContent = "Waktu Habis";
+            document.getElementById("countdown").classList.add("expired");
+            resetButtons();
+          }
+        }, 1000);
+      }
+
+      function stopCountdown() {
+        clearInterval(interval);
+        document.getElementById("startButton").disabled = false;
+        document.getElementById("stopButton").disabled = true;
+      }
+
+      function resetButtons() {
+        document.getElementById("startButton").disabled = false;
+        document.getElementById("stopButton").disabled = true;
+        countdown = 10; // Reset hitungan ke 10
+      }
+    </script>
+
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        text-align: center;
+      }
+      h1 {
+        margin-bottom: 20px;
+      }
+      #countdown {
+        font-size: 48px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      button {
+        padding: 15px 200px; /* Memperlebar tombol */
+        margin: 5px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+      }
+      .expired {
+        color: red;
+      }
+    </style>
+  </body>
+</html>
